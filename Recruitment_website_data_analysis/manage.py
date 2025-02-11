@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#超级管理员账号密码31314，Lsy5201314
 """Django's command-line utility for administrative tasks."""
 import os
 import sys

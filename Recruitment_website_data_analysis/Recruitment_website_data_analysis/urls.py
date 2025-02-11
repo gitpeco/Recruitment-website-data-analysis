@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('Crawl_content/', include('Crawl_content.urls')),
+
+    path('api/mgr/',include('mgr.urls')),
 ]
