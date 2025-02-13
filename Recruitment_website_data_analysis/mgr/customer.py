@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 import json
-from common.models import customer
+import  requests,pprint
+from common.models import Customer
 
 def dispatcher(request):
     # 将请求参数统一放入request 的 params 属性中，方便后续处理
@@ -9,7 +10,7 @@ def dispatcher(request):
     if request.method == 'GET':
         request.params = request.GET
 
-    # POST/PUT/DELETE 请求 参数 从 request 对象的 body 属性中获取
+    # POST/PUT/DELETE 请求 参数 从  request 对象的 body 属性中获取
     elif request.method in ['POST','PUT','DELETE']:
         # 根据接口，POST/PUT/DELETE 请求的消息体都是 json格式
         request.params = json.loads(request.body)
@@ -31,7 +32,7 @@ def dispatcher(request):
 
 def listcustomers(request):
     # 返回一个 QuerySet 对象 ，包含所有的表记录
-    qs = customer.objects.values()
+    qs = Customer.objects.values()
 
     # 将 QuerySet 对象 转化为 list 类型
     # 否则不能 被 转化为 JSON 字符串
@@ -64,7 +65,7 @@ def modifycustomer(request):
     try:
         # 根据 id 从数据库中找到相应的客户记录
         customer = Customer.objects.get(id=customerid)
-    except Customer.DoesNotExist:
+    except customer.DoesNotExist:
         return  {
                 'ret': 1,
                 'msg': f'id 为`{customerid}`的客户不存在'
@@ -82,3 +83,27 @@ def modifycustomer(request):
     customer.save()
 
     return JsonResponse({'ret': 0})
+
+def deletecustomer(request):
+
+    customerid = request.params['id']
+
+    try:
+        # 根据 id 从数据库中找到相应的客户记录
+        customer = Customer.objects.get(id=customerid)
+    except customer.DoesNotExist:
+        return  {
+                'ret': 1,
+                'msg': f'id 为`{customerid}`的客户不存在'
+        }
+
+    # delete 方法就将该记录从数据库中删除了
+    customer.delete()
+
+    return JsonResponse({'ret': 0})
+
+
+
+response = requests.get('http://localhost/api/mgr/customers?action=list_customer')
+
+pprint.pprint(response.json())
