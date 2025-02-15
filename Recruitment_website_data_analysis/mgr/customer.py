@@ -1,6 +1,5 @@
 from django.http import JsonResponse
 import json
-import  requests,pprint
 from common.models import Customer
 
 def dispatcher(request):
@@ -103,7 +102,3 @@ def deletecustomer(request):
     return JsonResponse({'ret': 0})
 
 
-
-response = requests.get('http://localhost/api/mgr/customers?action=list_customer')
-
-pprint.pprint(response.json())

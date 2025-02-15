@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
-from mgr import costomer
+from mgr.customer import dispatcher
 
 urlpatterns = [
 
-    path('customers',customer.dispatcher),
+    path('customers/',dispatcher),
 ]

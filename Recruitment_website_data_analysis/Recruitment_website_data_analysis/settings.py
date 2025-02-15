@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Crawl_content',
+    'Crawl.apps.CrawlContentConfig',
+    'mgr.apps.MgrConfig',
     'common.apps.CommonConfig',
 ]
 

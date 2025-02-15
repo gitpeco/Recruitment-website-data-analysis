@@ -2,10 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 # 导入 Customer 对象定义
 from  common.models import  Customer
-
 def listorders(request):
     return HttpResponse("下面是系统中所有的订单信息。。。")
-
 # 先定义好HTML模板
 html_template ='''
 <!DOCTYPE html>
