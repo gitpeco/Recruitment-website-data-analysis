@@ -1,3 +1,11 @@
-from django.test import TestCase
+import  requests,pprint
 
-# Create your tests here.
+payload = {
+    'username': 'byhy',
+    'password': '88888888'
+}
+
+response = requests.post('http://localhost/api/mgr/signout',
+              data=payload)
+
+pprint.pprint(response.json())
