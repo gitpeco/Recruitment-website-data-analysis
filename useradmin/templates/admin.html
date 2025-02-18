@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <div id="user-list"></div>
+
+    <script>
+        async function loadUsers() {
+            const response = await fetch('/api/users/');
+            const data = await response.json();
+
+            const list = document.getElementById('user-list');
+            list.innerHTML = data.users.map(user => `
+                <div>
+                    ${user.username}
+                    <button onclick="deleteUser(${user.id})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        async function deleteUser(userId) {
+            await fetch(`/api/users/${userId}/`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            });
+            loadUsers();
+        }
+
+        // 初始化加载用户列表
+        loadUsers();
+    </script>
+</body>
+</html>
